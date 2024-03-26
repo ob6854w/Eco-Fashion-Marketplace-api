@@ -11,6 +11,7 @@ module.exports = [
         image_url: 'https://www.everlane.com/products/womens-organic-cotton-muscle-tee-white',
         colors:'Black, White, Heather Grey,Bone/Black',
         sizes:'XXS, XS, S, M, L, XL, XXL',
+        
     },
     {
         id: 2,
