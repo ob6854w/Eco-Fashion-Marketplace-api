@@ -32,7 +32,7 @@ try{
             return res.status(404).send("User not registered")
         }
          //validate password
-         const isPasswordValid = await bcrypt.compare(password, user.password); 
+         const isPasswordValid = await bcrypt.compareSync(password, user.password); 
         if (!isPasswordValid){
             return res.status(400).send('Invalid password')
         } 
@@ -48,14 +48,14 @@ try{
 };
 
 //Authorization
-async function authorize(req,res, next) {
+async function authorize(req, res, next) {
 try {
     const authorizationHeader = req.headers.authorization;
     
-    const token = authorizationHeader.slice("Bearer ".length);
+    const authtoken = authorizationHeader.split(" ")[1];
 
     //Verify the token
-    const decodedToken = jwt.verify(token, process.env.JWT_KEY);
+    const decodedToken = jwt.verify(authtoken, process.env.JWT_KEY);
 
     //fetch user from database
     const user = await knex("users").where({id:decodedToken.id}).first();
