@@ -7,6 +7,12 @@ const signup = async(req, res) => {
     const { username, name, email, password } = req.body;
    
     try {
+        //Check if user with the same email already exists
+        const existingUser = await knex('users').where({email}).first();
+        if (existingUser) {
+            return res.status(400).json({message: 'User with this email already exists'});
+        }
+        // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
          //create new user
          const newUser = {
@@ -32,7 +38,7 @@ try{
             return res.status(404).send("User not registered")
         }
          //validate password
-         const isPasswordValid = await bcrypt.compareSync(password, user.password); 
+         const isPasswordValid = await bcrypt.compare(password, user.password); 
         if (!isPasswordValid){
             return res.status(400).send('Invalid password')
         } 
@@ -51,6 +57,10 @@ try{
 async function authorize(req, res, next) {
 try {
     const authorizationHeader = req.headers.authorization;
+
+    if (!authorizationHeader || !authorizationHeader.startsWith('Bearer ')) {
+        return res.status(401).send('Unauthorized: Missing or invalid token');
+    }
     
     const authtoken = authorizationHeader.split(" ")[1];
 
@@ -63,14 +73,46 @@ try {
     if (!user) {
         return res.status(401).send('Unauthorized: User not found');
     }
+    
+    //Remove password field from user object
+    delete user.password;
+    
+    //Asign user onject to req.user
     req.user = user;
+
+    //Call next middleware
     next();
 } catch (error) {
     res.status(401).send("Unauthorized: Invalid token")
+ }
 }
+
+/// Controller function for fetching user data for the dashboard
+async function getDashboard(req,res) {
+    try {
+      // Access user ID from decoded token
+      const userId = req.user.id;
+      
+      // Fetch user data from the database using Knex.js
+      const user = await knex('users').where('id', userId).first();
+
+      if (!user) {
+        return res.status(401).send('Unauthorized: User not found');
+      }
+
+      //// Remove sensitive fields from user object
+      delete user.password;
+
+         // Respond with user data
+         res.status(200).send(user);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
 }
 module.exports = {
     signup,
     login,
     authorize,
+    getDashboard,
 };

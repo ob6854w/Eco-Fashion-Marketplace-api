@@ -8,7 +8,7 @@ module.exports = [
         material: 'Organic Cotton',
         price: 49.00,
         currency: 'USD',
-        image_url: 'https://www.everlane.com/products/womens-organic-cotton-muscle-tee-white',
+        image_url: 'https://media.everlane.com/images/c_fill,w_384,ar_4:5,q_auto,dpr_1.0,f_auto,fl_progressive:steep/i/0d1029f1_19dc/womens-organic-cotton-muscle-tee-white',
         colors:'Black, White, Heather Grey,Bone/Black',
         sizes:'XXS, XS, S, M, L, XL, XXL',
         
@@ -113,7 +113,7 @@ module.exports = [
     material: 'Organic Cotton',
     price: 109.00,
     currency:'EUR',
-    image_url: 'https://peopletree.eu/products/leora-wrap-dress-in-blue?variant=46524884189507',
+    image_url: 'https://peopletree.eu/cdn/shop/products/People_Tree_Leora_Wrap_Dress_in_Blue_1_720x.jpg?v=1682082859',
     colors: 'Blue, Black, Red',
     sizes: '8, 10, 12, 14, 16'
 },
