@@ -1,6 +1,6 @@
 // import seed data files, arrays of objects
 const brandsData = require('../seed-data/brands');
-const productsnewData = require('../seed-data/products');
+const { cleanupProducts} = require('../seed-data/products');
 const usersData = require('../seed-data/users');
 const reviewsData = require('../seed-data/reviews');
 const bcrypt = require("bcrypt");
@@ -12,6 +12,8 @@ exports.seed = async function(knex) {
     user.password = hashedPassword;
   }
 
+  const products = await cleanupProducts();
+
   // Deletes ALL existing entries
   await knex('brands').del();
   await knex('products').del();
@@ -20,7 +22,7 @@ exports.seed = async function(knex) {
 
   // Inserts seed entries 
   await knex('brands').insert(brandsData);
-  await knex('products').insert(productsnewData); 
+  await knex("products").insert(products); 
   await knex("users").insert(usersData);
   await knex('reviews').insert(reviewsData);
 };
