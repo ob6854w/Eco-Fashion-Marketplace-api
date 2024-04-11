@@ -6,10 +6,10 @@
   "scripts": {
     "start": "node --watch index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "migrate": "knex migrate:latest",
-    "migrate:down": "knex migrate:down",
-    "migrate:rollback": "knex migrate:rollback",
-    "seed": "knex seed:run"
+    "migrate": "npx knex migrate:latest",
+    "migrate:down": "npx knex migrate:down",
+    "migrate:rollback": "npx knex migrate:rollback",
+    "seed": "npx knex seed:run"
   },
   "keywords": [],
   "author": "",

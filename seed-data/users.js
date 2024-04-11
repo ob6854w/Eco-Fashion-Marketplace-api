@@ -5,7 +5,6 @@ module.exports = [
       name: "Nester Brookfield",
       email: "nbrookfield0@feedburner.com",
       password:"Password123",
-          
     },
     {
       id: 102,
