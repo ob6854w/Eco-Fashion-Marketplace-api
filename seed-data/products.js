@@ -1,20 +1,78 @@
 const axios = require("axios");
 
-const fetchProducts = async () => {
-  const categoryList = [
-    "womens-dresses",
-    "womens-shoes",
-    "mens-shirts",
-    "mens-shoes",
-    "mens-watches",
-    "womens-watches",
-    "womens-bags",
-    "womens-jewellery",
-  ];
+const CATEGORY_LIST = [
+  "womens-dresses",
+  "womens-shoes",
+  "mens-shirts",
+  "mens-shoes",
+  "mens-watches",
+  "womens-watches",
+  "womens-bags",
+  "womens-jewellery",
+];
 
+const MATERIAL_LIST = [
+  "Organic Cotton",
+  "European Flax Linen",
+  "Regenerated Nylon elastane",
+  "Recycled Waterproof/ Breathable Face Fabric",
+  "Recycled Polyester",
+  "Silk",
+  "Organic Linen",
+  "Organic Cotton and Spandex",
+  "renewable Wood",
+  "Egyptian Cotton",
+  "BCI Cotton Chambray",
+];
+
+const COLOR_LIST = [
+  "Black, White, Heather Grey,Bone/Black",
+  "Black, Bone, Bone/Black Check",
+  "Shell, Sky",
+  "Olive, Black",
+  "Subtidal Blue, Nouveau Green, Smolder Blue, Black, Endless Blue, Buckhorn Green, Golden Caramel, Phosphorous Green, Wax Red",
+  "Steam Blue, Journeys:Natural, Antique Pink, Wispy Green",
+  "Pure White",
+  "Dark Blue",
+  "Blue, Black, Red",
+  "Blue Stripe",
+  "Black, White, Flame, Undyed natural",
+  "Meteorite Black",
+  "Black, Charcoal Heather, Blue Dusk, French Navy Heather, French Navy, Ivy, Medium Grey Heather",
+  "Black, Dark Forest, East Coast Stripe, French Navy, Maroon",
+  "Forest Green",
+  "Faded Rose Pink",
+  "Black, Mirage",
+  "Blue",
+];
+
+const SIZE_LIST = [
+  "XXS, XS, S, M, L, XL, XXL",
+  "XXS, XS, S, M, L, XL, XXL",
+  "XS, S, M, L, XL",
+  "XS, S, M, L, XL",
+  "XS, S, M, L, XL, XXL, 3XL",
+  "XS, S, M, L, XL",
+  "XXS, XS, S, M, L, XL",
+  "XXS, XS, S, M, L, XL",
+  "8, 10, 12, 14, 16",
+  "8, 10, 12, 14, 16",
+  "PP, PS, PM, PL, S, M, L, XL, XS, XXS, 1X, 2X, 3X",
+  "PP,PS, PM, PL, S, M, L, XL, XS, XXS, 1X, 2X, 3X",
+  "S, M, L, XL, XXL",
+  "S, M, L, XL, XS",
+  "S, M, L, XL",
+  "S, M, L, XL, XS",
+  "6, 8, 10, 12, 14, 16, 18",
+  "6, 8, 10, 12, 14, 16, 18",
+  "XS, S, M, L, XL, XXL",
+  "XS, S, M, L, XL, XXL",
+];
+
+const fetchProducts = async () => {
   let products = [];
 
-  for (let category of categoryList) {
+  for (let category of CATEGORY_LIST) {
     const { data } = await axios.get(
       `https://dummyjson.com/products/category/${category}`
     );
@@ -35,80 +93,27 @@ const initialBrandsCount = () => {
   return brandsCount;
 };
 
+const getRandomArrayIndex = (arr) => {
+  return Math.floor(Math.random() * arr.length);
+}
+
 exports.cleanupProducts = async () => {
   const products = await fetchProducts();
   const obj_brandsCount = initialBrandsCount();
 
-
   const cleanProdcts = products.map((product, index) => {
-    const materialList = [
-      "Organic Cotton",
-      "European Flax Linen",
-      "Regenerated Nylon elastane",
-      "Recycled Waterproof/ Breathable Face Fabric",
-      "Recycled Polyester",
-      "Silk",
-      "Organic Linen",
-      "Organic Cotton and Spandex",
-      "renewable Wood",
-      "Egyptian Cotton",
-      "BCI Cotton Chambray",
-    ];
     const randomMaterial =
-      materialList[Math.floor(Math.random() * materialList.length)];
+      MATERIAL_LIST[getRandomArrayIndex(MATERIAL_LIST)];
 
-    const colorList = [
-      "Black, White, Heather Grey,Bone/Black",
-      "Black, Bone, Bone/Black Check",
-      "Shell, Sky",
-      "Olive, Black",
-      "Subtidal Blue, Nouveau Green, Smolder Blue, Black, Endless Blue, Buckhorn Green, Golden Caramel, Phosphorous Green, Wax Red",
-      "Steam Blue, Journeys:Natural, Antique Pink, Wispy Green",
-      "Pure White",
-      "Dark Blue",
-      "Blue, Black, Red",
-      "Blue Stripe",
-      "Black, White, Flame, Undyed natural",
-      "Meteorite Black",
-      "Black, Charcoal Heather, Blue Dusk, French Navy Heather, French Navy, Ivy, Medium Grey Heather",
-      "Black, Dark Forest, East Coast Stripe, French Navy, Maroon",
-      "Forest Green",
-      "Faded Rose Pink",
-      "Black, Mirage",
-      "Blue",
-    ];
-    const randomColor = colorList[Math.floor(Math.random() * colorList.length)];
+    const randomColor =
+      COLOR_LIST[getRandomArrayIndex(COLOR_LIST)];
 
-    const sizeList = [
-      "XXS, XS, S, M, L, XL, XXL",
-      "XXS, XS, S, M, L, XL, XXL",
-      "XS, S, M, L, XL",
-      "XS, S, M, L, XL",
-      "XS, S, M, L, XL, XXL, 3XL",
-      "XS, S, M, L, XL",
-      "XXS, XS, S, M, L, XL",
-      "XXS, XS, S, M, L, XL",
-      "8, 10, 12, 14, 16",
-      "8, 10, 12, 14, 16",
-      "PP, PS, PM, PL, S, M, L, XL, XS, XXS, 1X, 2X, 3X",
-      "PP,PS, PM, PL, S, M, L, XL, XS, XXS, 1X, 2X, 3X",
-      "S, M, L, XL, XXL",
-      "S, M, L, XL, XS",
-      "S, M, L, XL",
-      "S, M, L, XL, XS",
-      "6, 8, 10, 12, 14, 16, 18",
-      "6, 8, 10, 12, 14, 16, 18",
-      "XS, S, M, L, XL, XXL",
-      "XS, S, M, L, XL, XXL",
-    ];
-    const randomSize = sizeList[Math.floor(Math.random() * sizeList.length)];
+    const randomSize = SIZE_LIST[getRandomArrayIndex(SIZE_LIST)];
 
     // Recursive function to get a random key from an object
     const getBrandId = () => {
       const random_key_brandId =
-        Object.keys(obj_brandsCount)[
-          Math.floor(Math.random() * Object.keys(obj_brandsCount).length)
-        ];
+        Object.keys(obj_brandsCount)[getRandomArrayIndex(Object.keys(obj_brandsCount))];
 
       if (obj_brandsCount[random_key_brandId] >= 4) {
         return getBrandId(); // Recursive case
