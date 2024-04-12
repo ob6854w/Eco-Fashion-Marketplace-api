@@ -1,3 +1,5 @@
+// exports.getReviews = () =
+
 module.exports = [
         {
             id: 1,
