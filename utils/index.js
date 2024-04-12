@@ -4,10 +4,10 @@ const {
 } = require("../constants");
 const axios = require("axios");
 
-exports.initialCountObj = () => {
+exports.initialCountObj = (minId, maxId) => {
   const countObj = {};
 
-  for (let id = 1; id <= 10; id++) {
+  for (let id = minId; id <= maxId; id++) {
     countObj[id] = 0;
   }
 
@@ -26,13 +26,13 @@ exports.fetchScrapeAPIResource = async (path, responseDataKey) => {
 };
 
 // Recursive function to get a random key from an object
-const getCountedId = (obj_counted) => {
+const getCountedId = (obj_counted, maxCount) => {
   const key_countedId_random =
     Object.keys(obj_counted)[
       getRandomArrayIndex(Object.keys(obj_counted))
     ];
 
-  if (obj_counted[key_countedId_random] >= 4) {
+  if (obj_counted[key_countedId_random] >= maxCount) {
     return getCountedId(obj_counted); // Recursive case
   }
 

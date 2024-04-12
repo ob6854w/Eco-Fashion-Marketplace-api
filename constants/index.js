@@ -1,5 +1,8 @@
 exports.SCRAPE_API_BASE_URL = "https://dummyjson.com";
 
+
+exports.SCRAPE_API_PRODUCTS_COUNT = 40;
+
 exports.SCRAPE_API_CATEGORY_LIST = [
   "womens-dresses",
   "womens-shoes",
@@ -68,3 +71,4 @@ exports.SIZE_LIST = [
   "XS, S, M, L, XL, XXL",
   "XS, S, M, L, XL, XXL",
 ];
+

@@ -5,6 +5,7 @@ const {
   COLOR_LIST,
   MATERIAL_LIST,
   SIZE_LIST,
+  SCRAPE_API_PRODUCTS_COUNT,
 } = require("../constants");
 const {
   getRandomArrayIndex,
@@ -12,6 +13,11 @@ const {
   fetchScrapeAPIResource,
   getCountedId,
 } = require("../utils");
+
+const BRANDS_COUNTS = 10;
+const BRANDS_MIN_ID = 1;
+const BRANDS_MAX_ID = 10;
+
 
 const fetchProducts = async () => {
   let products = [];
@@ -29,18 +35,18 @@ const fetchProducts = async () => {
 
 exports.cleanupProducts = async () => {
   const products = await fetchProducts();
-  const obj_countedBrands = initialCountObj();
+  const obj_countedBrands = initialCountObj(BRANDS_MIN_ID, BRANDS_MAX_ID);
 
   const cleanProdcts = products.map((product, index) => {
     const randomMaterial = MATERIAL_LIST[getRandomArrayIndex(MATERIAL_LIST)];
     const randomColor = COLOR_LIST[getRandomArrayIndex(COLOR_LIST)];
     const randomSize = SIZE_LIST[getRandomArrayIndex(SIZE_LIST)];
 
-    const brand_id = getCountedId(obj_countedBrands);
+    const brand_id = getCountedId(obj_countedBrands, SCRAPE_API_PRODUCTS_COUNT / BRANDS_COUNTS);
 
     return {
       id: index + 1,
-      brand_id: brand_id,
+      brand_id,
       name: product.title,
       description: product.description,
       category: product.category,

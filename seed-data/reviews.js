@@ -1,19 +1,47 @@
-const { fetchScrapeAPIResource } = require("../utils");
+const {
+  fetchScrapeAPIResource,
+  getCountedId,
+  initialCountObj,
+} = require("../utils");
+
+const SCRAPE_API_COMMENT_COUNT = 50;
+
+const PRODUCTS_MIN_ID = 1;
+const PRODUCTS_MAX_ID = SCRAPE_API_COMMENT_COUNT / 2;
+
+const USERS_MIN_ID = 101;
+const USERS_MAX_ID = 111;
+const USERS_COUNT = USERS_MAX_ID - USERS_MIN_ID;
 
 exports.cleanupReviews = async () => {
   const comments = await fetchScrapeAPIResource(
-    "/comments?limit=50",
+    `/comments?limit=${SCRAPE_API_COMMENT_COUNT}`,
     "comments"
   );
 
-  
+  const obj_countedProducts = initialCountObj(
+    PRODUCTS_MIN_ID,
+    PRODUCTS_MAX_ID
+  );
+  const obj_countedUsers = initialCountObj(USERS_MIN_ID, USERS_MAX_ID);
 
   const reviews = comments.map((comment) => {
+    const product_id = getCountedId(
+      obj_countedProducts,
+      SCRAPE_API_COMMENT_COUNT / PRODUCTS_MAX_ID
+    );
+    const user_id = getCountedId(
+      obj_countedUsers,
+      SCRAPE_API_COMMENT_COUNT / USERS_COUNT
+    );
+
+    const rating = parseFloat((Math.random() * (5.1 - 1) + 1).toPrecision(2));
+
     return {
       id: comment.id,
-      product_id: 1,
-      user_id: 101,
-      rating: 4.5,
+      product_id,
+      user_id,
+      rating,
       comment: comment.body,
     };
   });
