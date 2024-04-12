@@ -8,8 +8,9 @@ const {
 } = require("../constants");
 const {
   getRandomArrayIndex,
-  initialBrandsCount,
+  initialCountObj,
   fetchScrapeAPIResource,
+  getCountedId,
 } = require("../utils");
 
 const fetchProducts = async () => {
@@ -28,31 +29,14 @@ const fetchProducts = async () => {
 
 exports.cleanupProducts = async () => {
   const products = await fetchProducts();
-  const obj_brandsCount = initialBrandsCount();
+  const obj_countedBrands = initialCountObj();
 
   const cleanProdcts = products.map((product, index) => {
     const randomMaterial = MATERIAL_LIST[getRandomArrayIndex(MATERIAL_LIST)];
-
     const randomColor = COLOR_LIST[getRandomArrayIndex(COLOR_LIST)];
-
     const randomSize = SIZE_LIST[getRandomArrayIndex(SIZE_LIST)];
 
-    // Recursive function to get a random key from an object
-    const getBrandId = () => {
-      const random_key_brandId =
-        Object.keys(obj_brandsCount)[
-          getRandomArrayIndex(Object.keys(obj_brandsCount))
-        ];
-
-      if (obj_brandsCount[random_key_brandId] >= 4) {
-        return getBrandId(); // Recursive case
-      }
-
-      obj_brandsCount[random_key_brandId] += 1;
-      return random_key_brandId; // Base case
-    };
-
-    const brand_id = getBrandId();
+    const brand_id = getCountedId(obj_countedBrands);
 
     return {
       id: index + 1,
