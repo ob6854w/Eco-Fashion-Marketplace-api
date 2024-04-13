@@ -62,8 +62,6 @@ exports.addCartItem = async (req, res) => {
       product_id: productId,
     }))[0];
 
-    console.log(existingUserCartItem, productId, userId);
-
     if (existingUserCartItem) {
       let localQuantityVar;
 
