@@ -3,6 +3,7 @@ const brandsData = require('../seed-data/brands');
 const { cleanupProducts } = require('../seed-data/products');
 const { cleanupReviews } = require("../seed-data/reviews");
 const usersData = require('../seed-data/users');
+const cartsData = require('../seed-data/carts');
 const bcrypt = require("bcrypt");
 
 exports.seed = async function(knex) {
@@ -20,10 +21,12 @@ exports.seed = async function(knex) {
   await knex('products').del();
   await knex('users').del();
   await knex('reviews').del();
+  await knex('carts').del();
 
   // Inserts seed entries 
   await knex('brands').insert(brandsData);
   await knex("products").insert(products); 
   await knex("users").insert(usersData);
   await knex('reviews').insert(reviewsData);
+  await knex('carts').insert(cartsData);
 };
