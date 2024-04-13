@@ -6,6 +6,7 @@ const brandsRoutes = require('./routes/brands');
 const productsRoutes = require('./routes/products');
 const usersRoutes = require('./routes/users');
 const cartRoutes = require('./routes/carts');
+const reviewsRoutes = require('./routes/reviews');
 
 const PORT = process.env.PORT || 5050;
 
@@ -17,6 +18,7 @@ app.use('/brands', brandsRoutes);
 app.use('/products', productsRoutes);
 app.use('/users', usersRoutes);
 app.use('/carts', cartRoutes);
+app.use("/reviews", reviewsRoutes);
 
 
 app.listen(PORT, () => {
