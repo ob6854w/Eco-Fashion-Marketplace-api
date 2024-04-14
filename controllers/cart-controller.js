@@ -12,7 +12,7 @@ exports.getAllCartItemsByUserId = async (req, res) => {
 
     const userCartItems = await knex("carts").where({
       user_id: userId,
-    });
+    }).innerJoin("products", "carts.product_id", "products.id");
 
     res.status(200).json(userCartItems);
   } catch (error) {
@@ -114,3 +114,28 @@ exports.addCartItem = async (req, res) => {
     });
   }
 };
+
+
+exports.deleteCartItem = async (req, res) => { 
+  const { id } = req.params;
+ 
+  if (!id) {
+    return res.status(400).json({
+      message: "Cart Item ID is required in the request params",
+    });
+  }
+
+  const existingCartItem = (await knex("carts").where({ id }))[0];
+
+  if (!existingCartItem) {
+    return res.status(404).json({
+      message: "Cart item does not exist",
+    });
+  }
+
+  await knex("carts").where({ id }).delete();
+
+  res.status(200).json({
+    message: "Cart item deleted successfully",
+  });
+}

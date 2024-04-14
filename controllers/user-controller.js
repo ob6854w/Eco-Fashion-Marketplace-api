@@ -35,12 +35,12 @@ const login = async(req, res) => {
 try{
         const user = await knex("users").where("username", username).first();
         if (!user) {
-            return res.status(404).send("User not registered")
+            return res.status(401).send("Invalid username or password");
         }
          //validate password
          const isPasswordValid = await bcrypt.compare(password, user.password); 
         if (!isPasswordValid){
-            return res.status(400).send('Invalid password')
+            return res.status(400).send('Invalid username or password');
         } 
         //Generate token
         const token = jwt.sign(
