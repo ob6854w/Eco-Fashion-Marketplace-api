@@ -12,7 +12,9 @@ exports.getAllReviewsByProductId = async (req, res) => {
 
     const productReviews = await knex("reviews").where({
       product_id: productId,
-    });
+    })
+      .select("reviews.id", "reviews.product_id", "reviews.user_id", "reviews.rating", "reviews.comment", "reviews.created_at", "reviews.updated_at", "users.name")
+      .join("users", "reviews.user_id", "users.id");
 
     res.status(200).json(productReviews);
   } catch (error) {

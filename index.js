@@ -11,6 +11,7 @@ const reviewsRoutes = require('./routes/reviews');
 const PORT = process.env.PORT || 5050;
 
 app.use(express.json());
+app.use(express.static('public'));
 
 app.use(cors());
 

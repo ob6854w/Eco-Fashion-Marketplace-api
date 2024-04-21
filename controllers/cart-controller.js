@@ -12,7 +12,9 @@ exports.getAllCartItemsByUserId = async (req, res) => {
 
     const userCartItems = await knex("carts").where({
       user_id: userId,
-    }).innerJoin("products", "carts.product_id", "products.id");
+    })
+    .select("carts.id","carts.quantity","carts.user_id", "carts.product_id", "products.name", "products.price", "products.image_url")
+    .innerJoin("products", "carts.product_id", "products.id");
 
     res.status(200).json(userCartItems);
   } catch (error) {
